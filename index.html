@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        
+        <link rel="stylesheet" href="css/index.css" >
+        <!--<script src="https://cdn.bootcss.com/jquery/1.8.3/jquery.min.js"></script>
+        <script src="https://cdn.bootcss.com/angular.js/1.4.14/angular.js"></script>
+        <script src="https://cdn.bootcss.com/angular-ui-router/0.4.2/angular-ui-router.js"></script>
+        <script src="https://cdn.bootcss.com/angular.js/1.4.14/angular-cookies.js"></script>     -->   
+        <!--<script src="https://cdn.bootcss.com/moment.js/2.18.1/moment.min.js"></script>-->
+        <script src="framework/jQuery-v1.8.3.js"></script>  
+        <script src="framework/AngularJS-v1.4.14.js"></script>
+        <script src="framework/AngularJS-v1.4.14-Cookies.js"></script>  
+        <script src="framework/angular-ui-router-v0.4.2.js"></script>   
+        <link href="framework/bootstrap-datetimepicker.min.css" rel="stylesheet">
+        <script src="framework/bootstrap-datetimepicker.min.js"></script>
+        <script src="framework/bootstrap-datetimepicker.zh-CN.js"></script>
+        <script src="framework/bootstrap.min.js"></script>
+        <script src="framework/ngDraggable.js"></script>
+        <!--<link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+        <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>-->
+        <script src="js/app.js"></script> 
+        <script src="js/controllers.js"></script>
+        <script src="js/directives.js"></script>  
+    </head>
+    <body ng-app="rtApp">
+        <header>
+            <!--<div ng-include="'header.html'"></div>-->
+            <div ui-view='header'></div>
+        </header>
+        <div class="content">
+            <!--<div ng-include="'navside.html'"></div>-->
+            <div ui-view='navside'></div>
+            <div ui-view></div>           
+        </div>
+    </body>
+</html>

@@ -1,0 +1,58 @@
+
+    <div class="seat-table" ng-controller="SeatNorCtrl">
+                <div class="path-name">
+                    <img src="imgs/index.png">首页>>考勤课表>>课堂考勤
+                </div>
+                <div class="class-info-wrap">
+                    <div class="class-detail pull-left">
+                        <div class="cur-class">当前课堂信息 :（第{{week}}周）星期{{_weekday}} ｜ 第{{classSeq}}节 | {{className}} | {{courseName}} |<span class="leav-num">已请假：{{leaveNum}} 人</span></div>
+                        <div class="att-info">总人数：{{stuNum}}人 |正常：{{normalNum}}人 |迟到：{{lateNum}}人 |严重迟到：{{lateBadlyNum}}人 |早退：{{leaveEarlyNum}}人 |旷课：{{skipClassNum}}人 |</div>
+                    </div>
+                    <div class="pull-left refresh" ng-click="refresh()"><img src="imgs/refresh.png">刷新</div>
+                    <div class="clearfix"></div>
+                    <div class="btn-wrap">
+                        <div class="pull-left full-att"  ng-click="fullAttConfirm()"><img src="imgs/full-att.png">全勤</div>
+                        <a ui-sref="seatnormal({'teacherid':{{teacherId}},'termid':{{termId}},'week':{{week}},'weekday':{{weekday}},'classname':'{{className}}','coursename':'{{courseName}}','classid':{{classId}},'courseid':{{courseId}},'classseq':{{classSeq}},'src':1})" class="pull-left list"><img src="imgs/list.png">座位模式</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="seat-list"> 
+                    <table class="table table-striped table-bordered text-center table-condensed" seat-directive>
+                        <thead>
+                            <tr>
+                                <th class="fst-col-lst">序号</th>
+                                <th>学号</th>
+                                <th>班级</th>
+                                <th>姓名</th>
+                                <th class="col4">考勤状态</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="stu in stuList">
+                                <td  class="fst-col-lst">{{$index+1}}</td>
+                                <td>{{stu.stuNO}}</td>
+                                <td>{{stu.myClaName}}</td>
+                                <td>{{stu.stuName}}</td>
+                                <td>
+                                    <select class="form-control input-sm normal" id='{{stu.studentId}}' att-state>
+                                        <option value='1' class="normal">正常</option>
+                                        <option value='2' class="late">迟到</option>
+                                        <option value='3' class="latebadly">严重迟到</option>
+                                        <option value='4' class="leaveearly">早退</option>
+                                        <option value='5' class="skip">旷课</option>
+                                        <option value='0' class="leaved">已请假</option>
+                                    </select>
+                                    <!--<select class="form-control input-sm" id='{{stu.studentId}}' att-state ng-model="attState" ng-init='attState="{{stu.stuNO}}"'>
+                                        <option value
+                                        <!--<option value="{{stu.stuNO}}" ng-repeat="attStatusStyle in arrAttStatusStyle" class="{{arrAttStatusStyle[$index]}}">{{arrAttStatus[$index]}}</option>
+                                    </select>-->
+                            </tr>                           
+                        </tbody>
+                    </table>
+                    <div class="break-page-bt" id="break-page-bt">
+                        <button class="btn btn-default pull-left" id="previous" ng-click="previous()">上一页</button>
+                        <button class="btn btn-default pull-left" ng-class="{active:$root.isActive(page)}" ng-click="getCurPage(page)" ng-repeat="page in pageList">{{page}}</button>
+                        <button class="btn btn-default pull-left" ng-click="next()">下一页</button>
+                    </div>
+                </div>
+            </div>           

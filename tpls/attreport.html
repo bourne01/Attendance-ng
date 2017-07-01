@@ -1,0 +1,61 @@
+
+            <div class="att" ng-controller="attReport">
+                <div class="path-name">
+                    <img src="imgs/index.png">首页>>考勤>>考勤报告
+                </div>
+                <form class="form-inline">
+                    <div class="form-group term">
+                        <lable for="term">学期：</lable>
+                        <select class="form-control input-att" ng-model="termSelect">
+                            <option ng-repeat="term in termList" value="{{term.autoId}}">{{term.name}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group cycle">
+                        <lable for="cycle">周次：</lable>
+                        <select class="form-control input-att" ng-model="week" ng-init="week='000000'">
+                            <option value="000000">所有</option>
+                            <option ng-repeat="week in teachWeekList" value="{{$index+1}}">{{week}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group week">
+                        <lable for="week">星期：</lable>
+                        <select class="form-control input-att"ng-model="weekday" ng-init="weekday='000000'">
+                            <option value="000000">所有</option>
+                            <option ng-repeat="weekday in weekdayList" value="{{$index+1}}">{{weekday}}</option>
+                        </select>
+                    </div>
+                </form>
+                <div class="br"></div>
+                <span class="query"><button class="btn btn-default" ng-click="attReportQuery()"><img src="imgs/query.png">查询</button></span>
+                <div class="att-items"> 
+                        <table class="table table-bordered text-center table-condensed">
+                            <thead>
+                                <tr>
+                                    <th class="fst-col-lst">序号</th>                               
+                                    <th>教师姓名</th>
+                                    <th>班级</th>
+                                    <th>课程</th>
+                                    <th>周次</th>
+                                    <th>周课时</th>
+                                    <th>考勤次数</th>
+                                <tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="attReport in attReportList">
+                                    <td  class="fst-col-lst">{{$index+1}}</td>
+                                    <td>{{attReport.teacherName}}</td>                                
+                                    <td>{{attReport.className}}</td>                                
+                                    <td>{{attReport.courseName}}</td>
+                                    <td>{{attReport.week}}</td>
+                                    <td>{{attReport.weeklesnum}}</td>
+                                    <td>{{attReport.attence}}</td>
+                                </tr>                            
+                            </tbody>
+                        </table>
+                        <div class="break-page-bt" id="break-page-bt">
+                        <button class="btn btn-default pull-left" id="previous" ng-click="previous()">上一页</button>
+                        <button class="btn btn-default pull-left" ng-class="{active:$root.isActive(page)}" ng-click="getCurPage(page)" ng-repeat="page in pageList">{{page}}</button>
+                        <button class="btn btn-default pull-left" ng-click="next()">下一页</button>
+                    </div>
+                    </div>
+                </div>

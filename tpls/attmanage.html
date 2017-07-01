@@ -1,0 +1,176 @@
+
+        <div class="att" ng-controller="leaveAttCtrl">
+            <div class="path-name">
+                <img src="imgs/index.png">首页>>考勤>>考勤管理
+            </div>
+            <form class="form-inline">
+                <div class="form-group term">
+                    <lable for="term">学期：</lable>
+                    <select class="form-control input-att" ng-model="termSelect">
+                            <option ng-repeat="term in termList" value="{{term.autoId}}">{{term.name}}</option>
+                    </select>
+                </div>
+                <div class="form-group classroom">
+                    <lable for="classroom">班级：</lable>
+                    <select class="form-control input-att"  ng-model="classSelect">
+                        <option ng-repeat="myClass in myClassList" value="{{myClass.autoId}}">{{myClass.name}}</option>
+                    </select>
+                </div>
+                <div class="form-group cycle">
+                    <lable for="cycle">周次：</lable>
+                    <select class="form-control input-att" ng-model="weekSelect" ng-init="weekSelect='-1'">
+                        <option value="-1">所有</option>
+                        <option ng-repeat="week in teachWeekList">{{week}}</option>
+                    </select>
+                </div>
+                <div class="form-group week">
+                    <lable for="week">星期：</lable>
+                    <select class="form-control input-att" ng-model="weekdaySelect" ng-init="weekdaySelect='-1'">
+                            <option value="-1">所有</option>                                
+                            <option ng-repeat="weekday in weekdayList">{{weekday}}</option>
+                    </select>
+                </div>
+                <div class="br"></div>
+                <div class="form-group type">
+                    <lable for="type">类型：</lable>
+                    <select class="form-control input-att" ng-model="attTypeSelect" ng-init="attTypeSelect='-1'">
+                        <option value="-1">所有</option>
+                        <option ng-repeat="attType in attTypeList" value="{{$index}}">{{attType}}</option>
+                    </select>
+                </div>  
+                <span class="query"><button class="btn btn-default" att-query><img src="imgs/query.png">查询</button></span>
+                <span class="import"><button class="btn btn-default import"><img src="imgs/import.png">导出</button></span>
+                <span class="admin-import"><button class="btn btn-default admin-import">行政班汇总导出</button></span>
+            </form>
+            <div class="att-items"> 
+                    <table class="table table-bordered text-center table-condensed">
+                        <thead>
+                            <tr>
+                                <th class="fst-col-lst">序号</th>                               
+                                <th>班级</th>
+                                <th>行政班级</th>
+                                <th>学号</th>
+                                <th>姓名</th>
+                                <th>课程</th>
+                                <th>周次/星期/节次</th>
+                                <th>考勤情况</th>
+                                <th>操作</th>
+                            <tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="att in attList" >
+                                <td  class="fst-col-lst">{{$index+1}}</td>                                
+                                <td>{{att.F_ClassName}}</td>
+                                <td>{{att.F_AClassName}}</td>
+                                <td>{{att.F_StudentNo}}</td>
+                                <td>{{att.F_StudentName}}</td>
+                                <td>{{att.F_CourseName}}</td>
+                                <td>{{att.F_Week}}/{{att.F_WeekDay}}/{{att.F_Section}}</td>
+                                <td>{{attTypeList[att.F_Attence]}}</td>
+                                <td>
+                                    <form class="form-inline">
+                                        <span class="deal">
+                                            <button class="btn btn-default" id="{{att.F_AutoId}}" userpower="{{att.userpower}}" attdeal="{{att.attencedeal}}" ng-click="attPopDeal(att)" att-deal-action>立即处理
+                                            </button>
+                                        </span>
+                                        <span class="delete">
+                                            <button class="btn btn-default" ng-click="attDel(att.F_AutoId)">删除
+                                            </button>
+                                        </span>
+                                    </form>
+                                </td>
+                            </tr>                 
+                        </tbody>
+                    </table>
+                     <div class="break-page-bt" id="break-page-bt" ng-style="btnState">
+                        <button class="btn btn-default pull-left" id="previous" ng-click="previous()">上一页</button>
+                        <button class="btn btn-default pull-left" ng-class="{active:$root.isActive(page)}" ng-click="getCurPage(page)" ng-repeat="page in pageList">{{page}}</button>
+                        <button class="btn btn-default pull-left" ng-click="next()">下一页</button>
+                    </div>
+                </div>
+
+            <div class="mask" id="mask" ng-style="maskPop"></div>
+            <div class="popover" id="deal-pop" ng-style="dealPop">
+                <div class="h5">类型：{{attType}}</div>
+                <div class="base-info">
+                    基本信息：
+                    <table  class="table table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th>学生姓名</th>
+                                <th>学号</th>
+                                <th>教学班</th>
+                                <th>行政班</th>
+                                <th>课程</th>
+                                <th>时间</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{objCurAtt.F_StudentName}}</td>
+                                <td>{{objCurAtt.F_StudentNo}}</td>
+                                <td>{{objCurAtt.F_ClassName}}</td>
+                                <td>{{objCurAtt.F_AClassName}}</td>
+                                <td>{{objCurAtt.F_CourseName}}</td>
+                                <td>第{{objCurAtt.F_Week}}周/星期{{objCurAtt.F_WeekDay}}/第{{objCurAtt.F_Section}}节</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="head-deal">
+                        班主任处理意见：
+                        <textarea class="form-control" row="4" placeholder="默认处理：情况属实,无其它处理" ng-model="headCommentContent"></textarea>
+                    </div>
+                    <div class="admin-deal" ng-style="adminDealPop">
+                        管理员处理意见：
+                        <label class="radio-inline">
+                            <input type="radio" name="deal" id="deal" value="true" ng-model="adminComment.deal">正常处理
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="deal" id="cancel" value="false" ng-model="adminComment.deal">取消处理
+                        </label>
+                        <textarea class="form-control" row="4" placeholder="默认处理：情况属实,无其它处理" ng-model="adminCommentContent"></textarea>
+                    </div>
+                    <div class="form-inline text-center">
+                    <span class="deal-pop">
+                        <!--<button class="btn btn-default"  ng-click="attSave(objCurAtt.F_AutoId,objCurAtt.userpower)">立即处理-->
+                        <button class="btn btn-default"  attid="{{objCurAtt.F_AutoId}}" userpower="{{objCurAtt.userpower}}" att-save>立即处理
+                        </button>
+                    </span>
+                    <span class="cancel-pop"><button class="btn btn-default" ng-click="cancel()">取消</button></span>
+                </div>
+                </div>
+            </div>
+            <div class="popover" ng-style="pendingPop">
+                <div class="h5">类型：{{attType}}</div>
+                <div class="base-info">
+                    基本信息：
+                    <table class="table table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th>学生姓名</th>
+                                <th>学号</th>
+                                <th>教学班</th>
+                                <th>行政班</th>
+                                <th>课程</th>
+                                <th>时间</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{objCurAtt.F_StudentName}}</td>
+                                <td>{{objCurAtt.F_StudentNo}}</td>
+                                <td>{{objCurAtt.F_ClassName}}</td>
+                                <td>{{objCurAtt.F_AClassName}}</td>
+                                <td>{{objCurAtt.F_CourseName}}</td>
+                                <td>第{{objCurAtt.F_Week}}周/星期{{objCurAtt.F_WeekDay}}/第{{objCurAtt.F_Section}}节</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="form-inline text-center">
+                    <span class="deal-pop"><button class="btn btn-default">立即处理</button></span>
+                    <span class="cancel-pop"><button class="btn btn-default" ng-click="cancel()">取消</button></span>
+                </div>
+            </div>    
+            </div>
+        

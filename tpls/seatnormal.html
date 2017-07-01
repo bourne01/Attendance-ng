@@ -1,0 +1,51 @@
+   
+        <div class="seat-table" ng-controller="SeatNorCtrl">
+                <div class="path-name">
+                    <img src="imgs/index.png">首页>>考勤课表>>课堂考勤
+                </div>
+                <div class="class-info-wrap">
+                    <div class="class-detail pull-left">
+                        <div class="cur-class">当前课堂信息 :（第{{week}}周）星期{{_weekday}} ｜ 第{{classSeq}}节 | {{className}} | {{courseName}} |<span class="leav-num">已请假：{{leaveNum}} 人</span></div>
+                        <!--<div class="att-info">总人数：{{stuNum}}人 |正常：{{normalNum}}人 |迟到：{{lateNum}}人 |严重迟到：{{lateBadlyNum}}人 |早退：{{leaveEarlyNum}}人 |旷课：{{skipClassNum}}人 |</div>-->
+                        <div class="att-info">{{attSum}}</div>
+                    </div>
+                    <div class="pull-left refresh" ng-click="refresh()"><img src="imgs/refresh.png">刷新</div>
+                    <div class="clearfix"></div>
+                    <div class="btn-wrap">
+                        <div class="pull-left full-att" ng-click="fullAttConfirm()"><img src="imgs/full-att.png">全勤</div>
+                        <a ui-sref="seatlist({'teacherid':{{teacherId}},'termid':{{termId}},'week':{{week}},'weekday':{{weekday}},'classname':'{{className}}','coursename':'{{courseName}}','classid':{{classId}},'courseid':{{courseId}},'classseq':{{classSeq}},'src':1})" class="pull-left list"><img src="imgs/list.png">列表模式</a>
+                        <div class="pull-left save" ng-click="seatUpdate()"><img src="imgs/save.png">保存座位</div>
+                    </div>  
+                    <div class="clearfix"></div>
+                    <div class="seat-nor">
+                        <table seat-directive>
+                            <tr ng-repeat="stus in arrStuList" ng-init="trId=$index">
+                                <td ng-repeat="stu in stus" tr-id="{{trId}}" ng-drop="true" ng-drop-success="dropComplete($index,$data,$trId)" >
+                                    <div class="stu-info" ng-drag="true" ng-drag-data="stu">
+                                        <div class="stu-name">{{stu.stuName}}</div>
+                                        <div class="stu-down">
+                                            <div class="stu-id">{{stu.stuNO}}</div> 
+                                            <div class="att-status">                                                
+                                                <!--<select class="form-control input-sm" id='{{stu.studentId}}' att-state ng-model="attState" ng-init="attState='1'">
+                                                    <option value="{{$index}}" ng-repeat="attStatusStyle in arrAttStatusStyle" class="{{arrAttStatusStyle[$index]}}">{{arrAttStatus[$index]}}</option>
+                                                </select>  --> 
+                                                <select class="form-control input-sm normal" id='{{stu.studentId}}' att-state>
+                                                    <option value='1' class="normal">正常</option>
+                                                    <option value='2' class="late">迟到</option>
+                                                    <option value='3' class="latebadly">严重迟到</option>
+                                                    <option value='4' class="leaveearly">早退</option>
+                                                    <option value='5' class="skip">旷课</option>
+                                                    <option value='0' class="leaved">已请假</option>
+                                                </select>                                             
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>                            
+                        </table>
+                    </div>
+                    <div class="teach-step">
+                        讲台
+                    </div>
+                </div>
+            </div>

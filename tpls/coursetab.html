@@ -1,0 +1,16 @@
+ <div class="course-table" ng-controller="CourseTabCtrl">
+                <div class="path-name">
+                    <img src="imgs/index.png">首页>>考勤课表
+                </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="fst-col" style="border-right:none;">节次／星期</th>
+                        <th ng-repeat="week in weekCN" ng-class="{active:isActive($index+1)}">{{week}}</th>
+                    </tr>
+                </thead>
+                <tbody course-direct>                  
+                        
+                </tbody>
+            </table>
+        </div>

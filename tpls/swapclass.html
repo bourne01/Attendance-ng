@@ -1,0 +1,83 @@
+
+        <div class="swap-class" ng-controller="swapClassCtr">
+            <div class="path-name">
+                <img src="imgs/index.png">首页>>调代课
+            </div>
+            <form class="form-inline">
+                <div class="form-group term">
+                    <lable for="term">学期：</lable>
+                    <select class="form-control input-att" ng-model="termSelect">
+                            <option ng-repeat="term in termList" value="{{term.autoId}}">{{term.name}}</option>
+                    </select>
+                </div>
+                <div class="form-group term">
+                    <lable for="term">教师：</lable>
+                    <select class="form-control input-att" ng-model="teacherSelect" ng-init="teacherSelect='000000'">
+                         <option value="000000">所有</option>
+                         <option ng-repeat="teacher in teacherList" value="{{teacher.autoId}}">{{teacher.name}}</option>
+                    </select>
+                </div>
+                <div class="form-group classroom">
+                    <lable for="classroom">班级：</lable>
+                    <select class="form-control input-att" ng-model="classSelect" ng-init="classSelect='000000'">
+                         <option value="000000">所有</option>
+                         <option ng-repeat="class in classList" value="{{class.autoId}}">{{class.name}}</option>
+                    </select>
+                </div>
+                <div class="br"></div>
+                <div class="form-group from">
+                    <lable for="from">从：</lable>
+                    <select class="form-control input-att" ng-model="startWeekSelect" ng-init="startWeekSelect='000000'">
+                         <option value="000000">所有</option>
+                         <option ng-repeat="week in teachWeekList" value="{{$index+1}}">{{week}}</option>
+                    </select>
+                </div>
+                <div class="form-group to">
+                    <lable for="to">到：</lable>
+                    <select class="form-control input-att" ng-model="endWeekSelect" ng-init="endWeekSelect='000000'">
+                         <option value="000000">所有</option>
+                         <option ng-repeat="week in teachWeekList" value="{{$index+1}}">{{week}}</option>
+                    </select>
+                </div>
+                <span class="query"><button class="btn btn-default" ng-click="swapClassQuery()"><img src="imgs/query.png">查询</button></span>
+                <a ui-sref="classnote" class="btn btn-default import"><img src="imgs/swap-note.png">调代课登记</a>
+                
+            </form>
+            <div class="swap-items"> 
+                    <table class="table table-bordered text-center table-condensed">
+                        <thead>
+                            <tr>
+                                <th class="fst-col-lst">序号</th>                               
+                                <th>教师</th>
+                                <th>类型</th>
+                                <th>动作</th>
+                                <th>班级</th>
+                                <th>课程</th>
+                                <th>周次/星期/节次</th>
+                                <th>教室</th>
+                                <th>操作</th>
+                            <tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="swapClass in swapClassList">
+                                <td  class="fst-col-lst">{{$index+1}}</td>                                
+                                <td>{{swapClass.teacherName}}</td>
+                                <td>{{swapClassType[swapClass.type]}}</td>
+                                <td class='{{swapClassStyleList[swapClass.states]}}'>{{swapClasActionList[swapClass.states]}}</td>
+                                <td>{{swapClass.className}}</td>
+                                <td>{{swapClass.courseName}}</td>
+                                <td>{{swapClass.week}}/{{swapClass.weekDay}}/{{swapClass.section}}</td>
+                                <td>{{swapClass.roomName}}</td>
+                                <td>
+                                     <span class="delete"><button class="btn btn-default" ng-click="swapClassDel(swapClass.autoId)">删除</button></span>
+                                </td>
+                            </tr>                            
+                        </tbody>
+                    </table>
+                    <div class="break-page-bt" id="break-page-bt" ng-style="btnState">
+                        <button class="btn btn-default pull-left" id="previous" ng-click="previous()">上一页</button>
+                        <button class="btn btn-default pull-left" ng-class="{active:$root.isActive(page)}" ng-click="getCurPage(page)" ng-repeat="page in pageList">{{page}}</button>
+                        <button class="btn btn-default pull-left" ng-click="next()">下一页</button>
+                    </div>
+                </div>
+            </div>

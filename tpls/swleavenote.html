@@ -1,0 +1,82 @@
+
+        <div class="swap-leave-note" ng-controller="swapLeaveNoteCtrl">
+            <div class="path-name">
+                <img src="imgs/index.png">首页>>请假管理>>请假登记
+            </div>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <lable for="term" class="col-sm-4 control-lable text-right" >学期：</lable>
+                    <div class="col-sm-3">
+                        <select class="form-control input-att"ng-model="termSelect">
+                         <option ng-repeat="term in termList" value="{{term.autoId}}">{{term.name}}</option>
+                    </select>
+                    </select>
+                    </div>            
+                </div>
+                <div class="form-group">
+                    <lable for="term" class="col-sm-4 control-lable  text-right" >源日期：</lable>
+                    <div class="col-sm-2 input-group date " id="src-datetime"  data-link-field="dtp_input1">
+                        <input type='text' class="form-control input-att" ng-model="srcDatetime"> 
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-calendar"></i>  
+                        </span> 
+                    </div>           
+                </div>
+                <div class="form-group">
+                    <lable for="term" class="col-sm-4 control-lable text-right" >源周次/星期：  </lable>
+                    <div class="col-sm-2">
+                        <select class="form-control input-att" ng-model="srcClassSeqSelect" ng-init="srcClassSeqSelect='000000'">
+                            <option value="000000">请选择节次</option>
+                            <option ng-repeat="classSeq in classSeqList" value="{{$index+1}}">{{classSeq}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <select class="form-control input-att" ng-model="srcWeekSelect" ng-init="srcWeekSelect='000000'">
+                            <option value="000000">请选择周次</option>
+                            <option ng-repeat="week in weekList" value="{{$index+1}}">{{week}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <select class="form-control input-att" ng-model="srcWeekdaySelect" ng-init="srcWeekdaySelect='000000'">
+                            <option value="000000">请选择星期</option>
+                            <option ng-repeat="weekday in weekdayList" value="{{$index+1}}">{{weekday}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <lable for="term" class="col-sm-4 control-lable  text-right" >调至日期：</lable>
+                    <div class="col-sm-2 input-group date target-datetime" id="target-datetime" calendar>
+                        <input type='text' class="form-control input-att" ng-model="targetDatetime"> 
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-calendar"></i>  
+                        </span> 
+                    </div>            
+                </div>
+                <div class="form-group">
+                    <lable for="end-time" class="col-sm-4 control-lable text-right" >调至周次/星期：  </lable>
+                    <div class="col-sm-2">
+                         <select class="form-control input-att" ng-model="targetClassSeqSelect" ng-init="targetClassSeqSelect='000000'">
+                            <option value="000000">请选择节次</option>
+                            <option ng-repeat="classSeq in classSeqList" value="{{$index+1}}">{{classSeq}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                       <select class="form-control input-att" ng-model="targetWeekSelect" ng-init="targetWeekSelect='000000'">
+                            <option value="000000">请选择周次</option>
+                            <option ng-repeat="week in weekList" value="{{$index+1}}">{{week}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <select class="form-control input-att" ng-model="targetWeekdaySelect" ng-init="targetWeekdaySelect='000000'">
+                            <option value="000000">请选择星期</option>
+                            <option ng-repeat="weekday in weekdayList" value="{{$index+1}}">{{weekday}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-inline text-center">
+                    <span class="confirm-leave"><button class="btn btn-default" ng-click="leaveNoteConfirm()">确认提交 </button></span>
+                    <span class="cancel-leave"><button class="btn btn-default" ng-click="return()">取消返回</button></span>
+                </div>              
+            </form>
+        </div>
+        

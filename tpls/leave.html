@@ -1,0 +1,69 @@
+        <div class="leave"  ng-controller="leaveAttCtrl">
+            <div class="path-name">
+                <img src="imgs/index.png">首页>>请假管理
+            </div>
+            <form class="form-inline">
+                <div class="form-group term">
+                    <lable for="term">学期：</lable>
+                    <select class="form-control input-att" ng-model="termSelect">
+                         <option ng-repeat="term in termList" value="{{term.autoId}}">{{term.name}}</option>
+                    </select>
+                </div>
+                <div class="form-group classroom">
+                    <lable for="classroom">班级：</lable>
+                    <select class="form-control input-att" ng-model="classSelect">
+                        <<option ng-repeat="myClass in myClassList" value="{{myClass.autoId}}">{{myClass.name}}</option>
+                    </select>
+                </div>
+                <div class="form-group from">
+                    <lable for="from">从：</lable>
+                    <select class="form-control input-att" ng-model="startWeekSelect" ng-init="startWeekSelect='-1'">
+                        <option value="-1">所有</option>
+                        <option ng-repeat="week in teachWeekList" value="{{$index+1}}">{{week}}</option>    
+                    </select>
+                </div>
+                <div class="form-group to">
+                    <lable for="to">到：</lable>
+                    <select class="form-control input-att" ng-model="endWeekSelect" ng-init="endWeekSelect='-1'" >
+                        <option value="-1">所有</option>
+                        <option ng-repeat="week in teachWeekList" value="{{$index+1}}">{{week}}</option>
+                    </select>
+                </div>
+                <div class="br"></div>                
+                <span class="query"><button class="btn btn-default" ng-click="leaveQuery()"><img src="imgs/query.png" >查询</button></span>
+                <span class="leave-note"><button class="btn btn-default import" ng-click="getStudents()"><img src="imgs/import.png">请假登记</button></span>
+            </form>
+            <div class="leave-items"> 
+                    <table class="table table-bordered text-center table-condensed">
+                        <thead>
+                            <tr>
+                                <th class="fst-col-lst">序号</th>                               
+                                <th>学号</th>
+                                <th>班级</th>                                
+                                <th>姓名</th>
+                                <th>类型</th>
+                                <th>开始周次/星期/节次</th>
+                                <th>结束周次/星期/节次</th>
+                                <th>操作</th>
+                            <tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="leaveStu in leaveStuList">
+                                <td  class="fst-col-lst" >{{$index+1}}</td>
+                                <td>{{leaveStu.F_StudentNo}}</td>                                
+                                <td>{{leaveStu.F_ClassName}}</td>                                                             
+                                <td>{{leaveStu.F_StudentName}}</td>
+                                <td>{{leaveTypeList[leaveStu.F_LeaveType]}}</td>   
+                                <td>{{teachWeekList[leaveStu.F_StartWeek]}}/{{weekdayList[leaveStu.F_StartWeekDay]}}/{{classSeqList[leaveStu.F_StartSection]}}</td>
+                                <td>{{teachWeekList[leaveStu.F_EndWeek]}}/{{weekdayList[leaveStu.F_EndWeekDay]}}/{{classSeqList[leaveStu.F_EndSection]}}</td>
+                                <td><button class="btn btn-default" ng-click="leaveDel(leaveStu.F_AutoId)">删除</button></td>                                
+                            </tr>                   
+                        </tbody>
+                    </table>
+                    <div class="break-page-bt" id="break-page-bt"  ng-style="btnState">
+                        <button class="btn btn-default pull-left" id="previous" ng-click="previous()">上一页</button>
+                        <button class="btn btn-default pull-left" ng-class="{active:$root.isActive(page)}" ng-click="getCurPage(page)" ng-repeat="page in pageList">{{page}}</button>
+                        <button class="btn btn-default pull-left" ng-click="next()">下一页</button>
+                    </div>
+                </div>
+            </div>

@@ -1,0 +1,56 @@
+    <div class="swap-leave" ng-controller="swapLeaveCtrl">
+            <div class="path-name">
+                <img src="imgs/index.png">首页>>调休
+            </div>
+            <form class="form-inline">
+                <div class="form-group term">
+                    <lable for="term">学期：</lable>
+                    <select class="form-control input-att" ng-model="termSelect">
+                         <option ng-repeat="term in termList" value="{{term.autoId}}">{{term.name}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <span class="swap-query"><button class="btn btn-default" ng-click="swapLeaveQuery()"><img src="imgs/query.png" >查询</button></span>
+                    <span class="swap-note"><a ui-sref="swapleavenote" class="btn btn-default"><img src="imgs/swap-note.png">调休登记</a></span>
+                </div>
+            </form>
+             <div class="swap-items"> 
+                    <table class="table table-bordered text-center table-condensed">
+                        <thead>
+                            <tr>
+                                <th class="fst-col-lst">序号</th>                               
+                                <th>学期</th>
+                                <th>源日期</th>
+                                <th>源周次</th>
+                                <th>源星期</th>
+                                <th>源日期</th>
+                                <th>源周次</th>
+                                <th>源星期</th>
+                                <th>操作时间</th>
+                                <th>操作</th>
+                            <tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="swapLeave in swapLeaveList">
+                                <td  class="fst-col-lst">{{$index+1}}</td>                                
+                                <td>{{termName}}</td>
+                                <td>{{swapLeave.targetDate}}</td>
+                                <td>{{swapLeave.week}}</td>
+                                <td>{{swapLeave.weekDay}}</td>
+                                <td>{{swapLeave.time}}</td>
+                                <td>{{swapLeave.week2}}</td>
+                                <td>{{swapLeave.weekDay2}}</td>                               
+                                <td>{{swapLeave.time}}</td>
+                                <td>
+                                     <span class="delete"><button class="btn btn-default" ng-click="swapLeaveDel(swapLeave.autoId)">删除</button></span>
+                                </td>
+                            </tr>
+                            <tbody>
+                    <table>
+                    <div class="break-page-bt" id="break-page-bt" ng-style="btnState">
+                        <button class="btn btn-default pull-left" id="previous" ng-click="previous()">上一页</button>
+                        <button class="btn btn-default pull-left" ng-class="{active:$root.isActive(page)}" ng-click="getCurPage(page)" ng-repeat="page in pageList">{{page}}</button>
+                        <button class="btn btn-default pull-left" ng-click="next()">下一页</button>
+                    </div>
+                </div>
+            </div>
