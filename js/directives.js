@@ -362,7 +362,7 @@ baseMod
                      $http = scope.http;
                      var selectId = attr.id;
                      var arrAttStatusStyle = ['leaved','normal','late','latebadly','leaveearly','skip'];
-                     var time=$timeout(function(){//Delay 100ms to get the data form parent directive
+                     var time=$timeout(function(){//Delay 200ms to get the data form parent directive
                             attStatusList = scope.attStatusList;
                             console.log(attStatusList);
                             for(i=0;i<attStatusList.length;i++){                                                         
@@ -375,38 +375,7 @@ baseMod
                                 }
                             }
                     　　　 $timeout.cancel(time);
-                    　　　},200);
-                    /*//console.log(scope.$parent);
-                    var params = {'termId':scope.termId,
-                                        'classId':scope.classId,
-                                        'teacherId':scope.teacherId,
-                                        'courseId':scope.courseId,
-                                        'week':scope.week,
-                                        'weekDay':scope.weekday,
-                                        'section':scope.classSeq
-                                    };
-                    var url = "../../attence!getAttenceD.action?random="+Math.random();*/
-                   //scope.urlAtt = '../json/getstuattendance.json';
-                   
-                    /*$http({'method':scope.method,'url':scope.urlAtt,'params':scope.paramsAtt_Leave})
-                            .then(function(res){
-                                var objData = res.data;
-                                if(objData.success){//Correct response
-                                    attStatusList = objData.dataList;
-                                    for(i=0;i<attStatusList.length;i++){                                                         
-                                        var _selId = attStatusList[i].TStudent;
-                                        var _attStatusStyle = arrAttStatusStyle[attStatusList[i].FAttence];
-                                        objSeletor = angular.element("#"+_selId+" ."+_attStatusStyle)[0];
-                                        if(objSeletor){
-                                            objSeletor.selected = true;
-                                            angular.element("#"+_selId).addClass(_attStatusStyle);
-                                        }
-                                    }
-
-                                }
-                            })*/
-                    
-                    //var arrAttStatus = ['已请假','正常','迟到','严重迟到','早退','旷课'];                    
+                    　　　},200);               
                     element.on('change',function(event){
                         var attStatus = parseInt(angular.element("#"+selectId).val());
                         element.addClass(arrAttStatusStyle[attStatus]);
@@ -426,7 +395,26 @@ baseMod
                             .then(function(res){
                                 var objData = res.data;
                                 if(objData.success){
-                                    //update attendance information
+                                    //update attendance statistic information
+                                    var _url = "../../attence!attenceSum.action?random="+Math.random();
+                                    var _params = {
+                                        'termId':scope.termId,
+                                        'classId':scope.classId,
+                                        'teacherId':scope.teacherId,
+                                        'courseId':scope.courseId,
+                                        'week':scope.week,
+                                        'weekDay':scope.weekday,
+                                        'section':scope.classSeq
+                                    };
+                                    $http({'method':'get','url':_url,'params':_params})
+                                        .then(function(res){
+                                            var objData = res.data;
+                                            if(objData.success){
+                                                scope.attSum = objData.message;
+                                            }
+                                        },function(res){
+
+                                        })
                                     alert("考勤提交成功!");
                                 }else{
                                     alert("考勤提交失败\n"+objData.message);
